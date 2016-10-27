@@ -17,15 +17,17 @@ const int Status::BLUE[3]   = { 0, 0, 255 };
 const int Status::ORANGE[3] = { 255, 128, 0 };
 const int Status::YELLOW[3] = { 255, 255, 0 };
 
-Status::Status(const int redPin, const int greenPin, const int bluePin) {
+Status::Status(const int redPin, const int greenPin, const int bluePin, const int whitePin) {
 
 	this->redPin = redPin;
 	this->greenPin = greenPin;
 	this->bluePin = bluePin;
+	this->whitePin = whitePin;
 
 	pinMode(redPin, OUTPUT);   // sets the pins as output
 	pinMode(greenPin, OUTPUT);
 	pinMode(bluePin, OUTPUT);
+	pinMode(whitePin, OUTPUT);
 
 	// Initialize color variables
 	redVal = 0;
@@ -52,10 +54,22 @@ void Status::setColor(const int color[3])
 	 this->grnVal = color[1];
 	 this->bluVal = color[2];
 
-	 // Write current values to LED pins
-	analogWrite(this->redPin, this->redVal);
-	analogWrite(this->greenPin, this->grnVal);
-	analogWrite(this->bluePin, this->bluVal);
+	 if(color == WHITE)
+	 {
+		 digitalWrite(whitePin, HIGH);
+		 digitalWrite(redPin, LOW);
+		 digitalWrite(greenPin, LOW);
+		 digitalWrite(bluePin, LOW);
+	 }
+	 else
+	 {
+		 digitalWrite(whitePin, LOW);
+		 analogWrite(this->redPin, this->redVal);
+		 analogWrite(this->greenPin, this->grnVal);
+		 analogWrite(this->bluePin, this->bluVal);
+	 }
+
+
 }
 
 /* crossFade() converts the percentage colors to a

@@ -37,13 +37,19 @@ Bartender& bartender = serialBartender;
 Messenger message = Messenger();
 
 //Output device: status color
-Status status(PIN_RED,PIN_GREEN,PIN_BLUE);
+Status status(PIN_RED,PIN_GREEN,PIN_BLUE, PIN_STATUS);
 
 //Amount of poured drinks
 int total;
 
 //Oevrall state
 State state = INIT;
+
+void setupSonar()
+{
+	pinMode(SONAR_TRIGGER, OUTPUT);
+	pinMode(SONAR_ECHO, INPUT);
+}
 
 //messenger process function
 void setup()
@@ -52,10 +58,10 @@ void setup()
 	Serial.begin(9600);
 	communicator.begin(9600);
 
+	setupSonar();
 	//	FIXME setupBlueToothConnection();
 
 	//Start Status
-	pinMode(PIN_STATUS, OUTPUT);
 	status.setColor(Status::BLACK);
 
 //	//Start lcd
@@ -200,14 +206,22 @@ void messageCompleted()
 
 boolean glassReady()
 {
-	//Check glass sensor
-//	Serial.print("Read glass sensor: ");
-	float volts = analogRead(IR_RANGE)*0.0048828125;   // value from sensor * (5/1024) - if running 3.3.volts then change 5 to 3.3
-	float distance = 65*pow(volts, -1.10);          // TODO macro? : worked out from graph 65 = theretical distance / (1/Volts)S - luckylarry.co.uk
-//	Serial.println(distance);
+	long duration, distance;
+	digitalWrite(SONAR_TRIGGER, LOW);
+	delayMicroseconds(2);
+	digitalWrite(SONAR_TRIGGER, HIGH);
+	delayMicroseconds(10);
+	digitalWrite(SONAR_TRIGGER, LOW);
+	duration = pulseIn(SONAR_ECHO, HIGH);
+	distance = (duration / 2) / 29.1;
+	delayMicroseconds(50);
 
-	return distance > IR_BUMB_THRESHOLD_MIN && distance < IR_BUMB_THRESHOLD_MAX;
 
+//	Serial.print(distance);
+//	Serial.println(" cm");
+
+
+	return distance > 0 && distance < 15;
 }
 
 void selfTest()

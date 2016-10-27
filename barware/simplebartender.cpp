@@ -22,7 +22,9 @@ void SimpleBartender::setup()
 {
 	for(int i=0;i<NUMBER_OF_VALVES;i++)
 	{
+		Serial.println("setup valve");
 		pinMode(valves[i], OUTPUT);
+		digitalWrite(valves[i],LOW);
 	}
 }
 

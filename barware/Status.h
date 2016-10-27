@@ -21,7 +21,7 @@ public:
 	static const int ORANGE[3];
 	static const int YELLOW[3];
 
-	Status(const int redPin, const int greenPin, const int bluePin);
+	Status(const int redPin, const int greenPin, const int bluePin, const int whitePin);
 	virtual ~Status();
 
 	void crossFade(const int color[3]);
@@ -33,6 +33,7 @@ private:
 	int redPin;
 	int greenPin;
 	int bluePin;
+	int whitePin;
 
 	// Set initial color
 	int redVal;

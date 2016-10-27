@@ -22,7 +22,7 @@ void selfTest();
 #endif
 
 //****** Pins ******
-static const int NUMBER_OF_VALVES = 7;
+static const int NUMBER_OF_VALVES = 8;
 
 
 #if defined(__AVR_ATmega1280__) || defined(__AVR_ATmega2560__)
@@ -35,8 +35,9 @@ static const int NUMBER_OF_VALVES = 7;
 	static const int PIN_VALVE5 = 6;
 	static const int PIN_VALVE6 = 7;
 	static const int PIN_VALVE7 = 8;
+	static const int PIN_VALVE8 = 9;
 	static int VALVE_PINS[NUMBER_OF_VALVES] = {PIN_VALVE1, PIN_VALVE2, PIN_VALVE3, PIN_VALVE4,
-			PIN_VALVE5, PIN_VALVE6, PIN_VALVE7};
+			PIN_VALVE5, PIN_VALVE6, PIN_VALVE7, PIN_VALVE8};
 
 	/* LCD Pins
 	 *
@@ -77,14 +78,14 @@ static const int NUMBER_OF_VALVES = 7;
 #define IR_BUMB_THRESHOLD_MIN 20
 #define IR_BUMB_THRESHOLD_MAX 55
 
-static const int PIN_RED = 9;
-static const int PIN_GREEN = 10;
-static const int PIN_BLUE = 11;
+#define SONAR_TRIGGER A0
+#define SONAR_ECHO 9
+
+static const int PIN_RED = 10;
+static const int PIN_GREEN = 11;
+static const int PIN_BLUE = 12;
 static const int PIN_STATUS = 13;
 
-
-//TODO pressure pin
-//TODO temp pin
 
 /****** State ******/
 //Bar states
